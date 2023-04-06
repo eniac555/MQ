@@ -1,4 +1,4 @@
-package com.mymq.rabbitmq.workqueues;
+package com.mymq.rabbitmq.a02workqueues;
 
 import com.mymq.rabbitmq.utils.RabbitMqUtils;
 import com.rabbitmq.client.CancelCallback;
