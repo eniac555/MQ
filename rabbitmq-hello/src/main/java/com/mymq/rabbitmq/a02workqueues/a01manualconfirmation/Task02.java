@@ -1,4 +1,4 @@
-package com.mymq.rabbitmq.a03manualconfirmation;
+package com.mymq.rabbitmq.a02workqueues.a01manualconfirmation;
 
 import com.mymq.rabbitmq.utils.RabbitMqUtils;
 import com.rabbitmq.client.Channel;
