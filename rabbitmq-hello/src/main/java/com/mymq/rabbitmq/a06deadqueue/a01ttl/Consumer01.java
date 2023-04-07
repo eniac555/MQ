@@ -1,4 +1,4 @@
-package com.mymq.rabbitmq.deadqueue.a02outlength;
+package com.mymq.rabbitmq.a06deadqueue.a01ttl;
 
 import com.mymq.rabbitmq.utils.RabbitMqUtils;
 import com.rabbitmq.client.*;
@@ -13,13 +13,13 @@ import java.util.Map;
  */
 public class Consumer01 {
     //普通交换机
-    public static final String NORMAL_EXCHANGE = "normal_exchange_out_length";
+    public static final String NORMAL_EXCHANGE = "normal_exchange";
     //死信交换机
-    public static final String DEAD_EXCHANGE = "dead_exchange_out_length";
+    public static final String DEAD_EXCHANGE = "dead_exchange";
     //普通队列
-    public static final String NORMAL_QUEUE = "normal_queue_out_length";
+    public static final String NORMAL_QUEUE = "normal_queue";
     //死信队列
-    public static final String DEAD_QUEUE = "dead_queue_out_length";
+    public static final String DEAD_QUEUE = "dead_queue";
 
     public static void main(String[] args) throws Exception {
         Channel channel = RabbitMqUtils.getChannel();
@@ -34,10 +34,6 @@ public class Consumer01 {
         arguments.put("x-dead-letter-exchange", DEAD_EXCHANGE);
         //设置死信routingKey
         arguments.put("x-dead-letter-routing-key", "lisi");
-
-        //设置正常队列的最大长度
-        arguments.put("x-max-length", 6);
-
         channel.queueDeclare(NORMAL_QUEUE, false, false,
                 false, arguments);
 

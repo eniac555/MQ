@@ -1,4 +1,4 @@
-package com.mymq.rabbitmq.deadqueue.a03messagerefused;
+package com.mymq.rabbitmq.a06deadqueue.a03messagerefused;
 
 import com.mymq.rabbitmq.utils.RabbitMqUtils;
 import com.rabbitmq.client.*;

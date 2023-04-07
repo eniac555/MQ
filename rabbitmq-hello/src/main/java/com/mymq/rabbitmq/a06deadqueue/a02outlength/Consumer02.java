@@ -1,8 +1,11 @@
-package com.mymq.rabbitmq.deadqueue.a01ttl;
+package com.mymq.rabbitmq.a06deadqueue.a02outlength;
 
 
 import com.mymq.rabbitmq.utils.RabbitMqUtils;
-import com.rabbitmq.client.*;
+import com.rabbitmq.client.CancelCallback;
+import com.rabbitmq.client.Channel;
+import com.rabbitmq.client.DeliverCallback;
+import com.rabbitmq.client.Delivery;
 
 import java.nio.charset.StandardCharsets;
 
@@ -12,7 +15,7 @@ import java.nio.charset.StandardCharsets;
 public class Consumer02 {
 
     //死信队列
-    public static final String DEAD_QUEUE = "dead_queue";
+    public static final String DEAD_QUEUE = "dead_queue_out_length";
 
     public static void main(String[] args) throws Exception {
         Channel channel = RabbitMqUtils.getChannel();
