@@ -27,6 +27,9 @@ public class TtlQueueConfig {
     //死信队列名称
     public static final String DEAD_QUEUE = "QD";
 
+    //新增一个普通队列，无过期时间设置，需要发送者自己设定
+    public static final String QUEUE_C = "QC";
+
     //声明普通交换机   xExchange别名
     @Bean("xExchange")
     public DirectExchange xExchange() {
@@ -73,6 +76,18 @@ public class TtlQueueConfig {
         return QueueBuilder.durable(DEAD_QUEUE).build();
     }
 
+
+    //声明普通队列C
+    @Bean("queueC")
+    public Queue queueC() {
+        Map<String, Object> arguments = new HashMap<>(3);
+        //设置死信交换机
+        arguments.put("x-dead-letter-exchange", Y_DEAD_EXCHANGE);
+        //设置死信routingKey
+        arguments.put("x-dead-letter-routing-key", "YD");
+        return QueueBuilder.durable(QUEUE_C).withArguments(arguments).build();
+    }
+
     //绑定关系
     @Bean
     public Binding queueABindingX(@Qualifier("queueA") Queue queueA,
@@ -92,6 +107,14 @@ public class TtlQueueConfig {
     public Binding deadQueueBindingY(@Qualifier("deadQueue") Queue deadQueue,
                                   @Qualifier("yExchange") DirectExchange yExchange) {
         return BindingBuilder.bind(deadQueue).to(yExchange).with("YD");
+    }
+
+
+    //绑定关系
+    @Bean
+    public Binding queueCBindingX(@Qualifier("queueC") Queue queueC,
+                                  @Qualifier("xExchange") DirectExchange xExchange) {
+        return BindingBuilder.bind(queueC).to(xExchange).with("XC");
     }
 
 
