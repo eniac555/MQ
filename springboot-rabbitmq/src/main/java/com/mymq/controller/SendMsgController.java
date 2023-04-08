@@ -1,6 +1,7 @@
 package com.mymq.controller;
 
 
+import com.mymq.config.DelayedQueueConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,6 +44,21 @@ public class SendMsgController {
                 msg -> {
                     //设置发送消息时的延迟时长
                     msg.getMessageProperties().setExpiration(ttlTime);
+                    return msg;
+                });
+    }
+
+
+    //开始发消息，基于消息延迟插件进行的
+    @GetMapping("/sendDelayMsg/{message}/{delayTime}")
+    public void sendMsg(@PathVariable String message,
+                        @PathVariable Integer delayTime) {
+        log.info("当前时间：{},发送一条时长{}ms的信息给延迟队列delayed.queue：{}",
+                new Date().toString(), delayTime, message);
+        rabbitTemplate.convertAndSend(DelayedQueueConfig.DELAYED_EXCHANGE,
+                DelayedQueueConfig.DELAYED_ROUTING_KEY, message, msg -> {
+                    //设置发送消息时的延迟时长  ms
+                    msg.getMessageProperties().setDelay(delayTime);
                     return msg;
                 });
     }
